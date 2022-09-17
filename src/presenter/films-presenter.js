@@ -17,15 +17,17 @@ export default class FilmsPresenter {
   filmsListCommentedContainerComponent = new FilmsListContainerView();
 
 
-  init = (filmsContainer) => {
+  init = (filmsContainer, filmsModel) => {
     this.filmsContainer = filmsContainer;
+    this.filmsModel = filmsModel;
+    this.cardFilms = [...this.filmsModel.getFilms()];
 
     render(this.filmsComponent, this.filmsContainer);
 
     render(this.filmsListAllComponent, this.filmsComponent.getElement());
     render(this.filmsListAllContainerComponent, this.filmsListAllComponent.getElement());
-    for (let i = 0; i < 5; i++) {
-      render(new FilmCardView(), this.filmsListAllContainerComponent.getElement());
+    for (let i = 0; i < this.cardFilms.length; i++) {
+      render(new FilmCardView(this.cardFilms[i]), this.filmsListAllContainerComponent.getElement());
     }
     render(new ShowMoreView(), this.filmsListAllComponent.getElement());
 
