@@ -2,35 +2,34 @@ import {createElement} from '../render.js';
 import {formatRuntime} from '../utils.js';
 
 const createPopupTemplate = (film) => {
-  const {title, alternativeTitle, totalRating, description, ageRating, poster, runtime, genre} = film;
-  return(`<div class="film-details__inner">
-      <div class="film-details__top-container">
+  const {filmInfo, comments} = film;
+  return(`<div class="film-details__top-container">
         <div class="film-details__close">
           <button class="film-details__close-btn" type="button">close</button>
         </div>
         <div class="film-details__info-wrap">
          <div class="film-details__poster">
-            <img class="film-details__poster-img" src="${poster}" alt="">
+            <img class="film-details__poster-img" src="${filmInfo.poster}" alt="">
 
-            <p class="film-details__age">${ageRating}</p>
+            <p class="film-details__age">${filmInfo.ageRating}</p>
           </div>
 
          <div class="film-details__info">
             <div class="film-details__info-head">
               <div class="film-details__title-wrap">
-                <h3 class="film-details__title">${title}</h3>
-                <p class="film-details__title-original">${alternativeTitle}</p>
+                <h3 class="film-details__title">${filmInfo.title}</h3>
+                <p class="film-details__title-original">${filmInfo.alternativeTitle}</p>
               </div>
 
               <div class="film-details__rating">
-                <p class="film-details__total-rating">${totalRating}</p>
+                <p class="film-details__total-rating">${filmInfo.totalRating}</p>
               </div>
             </div>
 
             <table class="film-details__table">
              <tr class="film-details__row">
                 <td class="film-details__term">Director</td>
-                <td class="film-details__cell">Anthony Mann</td>
+                <td class="film-details__cell">${filmInfo.director}</td>
               </tr>
              <tr class="film-details__row">
                 <td class="film-details__term">Writers</td>
@@ -46,24 +45,24 @@ const createPopupTemplate = (film) => {
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Runtime</td>
-                <td class="film-details__cell">${formatRuntime(runtime)}</td>
+                <td class="film-details__cell">${formatRuntime(filmInfo.runtime)}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Country</td>
-                <td class="film-details__cell">USA</td>
+                  <td class="film-details__cell">${filmInfo.release.releaseCountry}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Genres</td>
                 <td class="film-details__cell">
-                  <span class="film-details__genre">${genre[0]}</span>
-                  <span class="film-details__genre">${genre[1]}</span>
-                  <span class="film-details__genre">${genre[2]}</span>
+                  <span class="film-details__genre">${filmInfo.genre[0]}</span>
+                  <span class="film-details__genre">${filmInfo.genre[1]}</span>
+                  <span class="film-details__genre">${filmInfo.genre[2]}</span>
                 </td>
               </tr>
             </table>
 
             <p class="film-details__film-description">
-              ${description}
+              ${filmInfo.description}
             </p>
           </div>
         </div>
@@ -77,7 +76,7 @@ const createPopupTemplate = (film) => {
 
       <div class="film-details__bottom-container">
         <section class="film-details__comments-wrap">
-          <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">4</span></h3>
+          <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
           <ul class="film-details__comments-list">
             <li class="film-details__comment">
@@ -164,8 +163,7 @@ const createPopupTemplate = (film) => {
             </div>
           </form>
         </section>
-      </div>
-    </div>`);
+      </div>`);
 };
 
 export default class PopupView {
