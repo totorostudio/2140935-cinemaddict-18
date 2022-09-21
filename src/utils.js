@@ -11,7 +11,7 @@ const getRandomInteger = (a = 0, b = 1) => {
 
 const formatRuntime = (runtime) => {
   if (runtime < 60) {
-    return runtime;
+    return `${runtime}m`;
   } else {
     const hours = Math.floor(runtime / 60);
     const min = runtime - (hours * 60);
@@ -20,5 +20,7 @@ const formatRuntime = (runtime) => {
 };
 
 const formatReleaseDate = (releaseDate) => dayjs(releaseDate).format('YYYY');
+const formatReleaseDatePopup = (releaseDate) => dayjs(releaseDate).format('DD MMMM YYYY');
+const formatCommentDate = (commentDate) => dayjs(commentDate).format('YYYY/MM/DD HH:MM');
 
-export {getRandomInteger, formatRuntime, formatReleaseDate};
+export {getRandomInteger, formatRuntime, formatReleaseDate, formatReleaseDatePopup, formatCommentDate};

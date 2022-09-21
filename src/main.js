@@ -10,7 +10,7 @@ import FilmsModel from './model/films-model.js';
 const siteMainElement = document.querySelector('.main');
 const siteHeaderElement = document.querySelector('.header');
 const siteFooterElement = document.querySelector('.footer__statistics');
-const sitePopupElement = document.querySelector('.film-details');
+const sitePopupElement = document.querySelector('.film-details__inner');
 const boardPresenter = new BoardPresenter();
 const popupPresenter = new PopupPresenter();
 const filmsModel = new FilmsModel();

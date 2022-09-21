@@ -54,31 +54,55 @@ const generateDescriptions = () => {
   return descriptions[randomIndex];
 };
 
+const generateCommentList = () => {
+  const randomLength = getRandomInteger(0, 8);
+  const commentsArray = [];
+  for (let i = 0; i <= randomLength; i++) {
+    const randomBoolean = getRandomInteger(0, 1);
+    if (randomBoolean) {
+      commentsArray.push(i);
+    }
+  }
+  return commentsArray;
+};
+
+const generateYear = () => `${getRandomInteger(1948, 2022)}-04-11T00:00:00.000Z`;
+
+const generateRating = () => `${getRandomInteger(3, 9)}.${getRandomInteger(0, 9)}`;
+
+const generateAgeRating = () => `${getRandomInteger(12, 18)}+`;
+
+const generateRuntime = () => getRandomInteger(20, 200);
+
+let filmIdCount = 0;
+const generateFilmId = () => {
+  filmIdCount++;
+  return (filmIdCount - 1);
+};
+
 export const generateFilm = () => ({
-  id: '0',
-  comments: [
-    0, 1
-  ],
+  id: generateFilmId(),
+  comments: generateCommentList(),
   filmInfo: {
     title: generateTitle(),
     alternativeTitle: 'Laziness Who Sold Themselves',
-    totalRating: '5.3',
+    totalRating: generateRating(),
     poster: generatePosters(),
-    ageRating: '0',
+    ageRating: generateAgeRating(),
     director: 'Tom Ford',
     writers: [
-      'Takeshi Kitano'
+      'Takeshi Kitano', 'David Lynch'
     ],
     actors: [
-      'Morgan Freeman'
+      'Morgan Freeman', 'Erich von Stroheim', 'Mary Beth Hughes', 'Dan Duryea'
     ],
     release: {
-      date: '2019-05-11T00:00:00.000Z',
+      date: generateYear(),
       releaseCountry: 'Finland'
     },
-    runtime: '77',
+    runtime: generateRuntime(),
     genre: [
-      'Comedy'
+      'Comedy', 'Drama', 'Thriller'
     ],
     description: generateDescriptions(),
   },

@@ -15,16 +15,45 @@ const generateName = () => {
   return names[randomIndex];
 };
 
-let idCount = 0;
-const generateId = () => {
-  idCount++;
-  return (idCount - 1);
+const generateText = () => {
+  const textes = [
+    'A film that changed my life',
+    'Its a great movie',
+    'A true masterpiece',
+    'Post-credit scene was just amazing omg',
+    'Nice movie',
+    'Thanks a lot! Great!',
+    'Amazing!',
+  ];
+
+  const randomIndex = getRandomInteger(0, textes.length - 1);
+  return textes[randomIndex];
+};
+
+const generateEmotion = () => {
+  const emotions = [
+    'smile',
+    'sleeping',
+    'puke',
+    'angry',
+  ];
+
+  const randomIndex = getRandomInteger(0, emotions.length - 1);
+  return emotions[randomIndex];
+};
+
+const generateDate = () => `${getRandomInteger(2020, 2022)}-0${getRandomInteger(1, 9)}-1${getRandomInteger(0, 9)}T16:12:32.554Z`;
+
+let commentsIdCount = 0;
+const generateCommentsId = () => {
+  commentsIdCount++;
+  return (commentsIdCount - 1);
 };
 
 export const generateComment = () => ({
-  id: generateId(),
+  id: generateCommentsId(),
   author: generateName(),
-  comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
-  date: '2019-05-11T16:12:32.554Z',
-  emotion: 'smile',
+  comment: generateText(),
+  date: generateDate(),
+  emotion: generateEmotion(),
 });

@@ -1,18 +1,16 @@
 import {createElement} from '../render.js';
 
-const createPopupSecondContainerTemplate = () => (
-  `<div class="film-details__inner">
+const createPopupBottomTemplate = () => (
+  `<div class="film-details__bottom-container">
+    <section class="film-details__comments-wrap">
 
+    </section>
   </div>`
 );
 
-export default class PopupSecondContainerView {
-  constructor(film) {
-    this.film = film;
-  }
-
+export default class PopupBottomView {
   getTemplate() {
-    return createPopupSecondContainerTemplate();
+    return createPopupBottomTemplate();
   }
 
   getElement() {
