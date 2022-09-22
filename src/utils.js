@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
 
+const MIN_IN_HOUR = 60;
+
 // Функция из интернета по генерации случайного числа из диапазона
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
 const getRandomInteger = (a = 0, b = 1) => {
@@ -10,11 +12,11 @@ const getRandomInteger = (a = 0, b = 1) => {
 };
 
 const formatRuntime = (runtime) => {
-  if (runtime < 60) {
+  if (runtime < MIN_IN_HOUR) {
     return `${runtime}m`;
   } else {
-    const hours = Math.floor(runtime / 60);
-    const min = runtime - (hours * 60);
+    const hours = Math.floor(runtime / MIN_IN_HOUR);
+    const min = runtime - (hours * MIN_IN_HOUR);
     return `${hours}h ${min}m`;
   }
 };
