@@ -60,6 +60,7 @@ export default class BoardPresenter {
     cardComponent.element.querySelector('.film-card__poster').addEventListener('click', () => {
       popupPresenter.init(this.#sitePopupElement, this.#filmsModel, number);
     });
+
     /*
     this.#sitePopupElement.querySelector('.film-details__close-btn').addEventListener('click', () => {
       //this.#sitePopupElement.firstChild.remove();
@@ -76,7 +77,6 @@ export default class BoardPresenter {
 
     document.addEventListener('keydown', onEscKeyDown);
 
-    //this.#sitePopupElement.firstChild
     /*popupTopView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
       //popupPresenter.init(this.#sitePopupElement, this.#filmsModel, number);
       console.log('close');
