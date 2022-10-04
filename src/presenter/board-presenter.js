@@ -6,41 +6,83 @@ import FilmsListContainerView from '../view/films-list-container-view.js';
 import FilmCardView from '../view/film-card-view.js';
 import ShowMoreView from '../view/show-more-view.js';
 import {render} from '../render.js';
+import PopupPresenter from '../presenter/popup-presenter.js';
+import PopupTopView from '../view/popup-top-view.js';
+
+const popupPresenter = new PopupPresenter();
 
 export default class BoardPresenter {
-  boardComponent = new BoardView();
-  filmsListAllComponent = new FilmsListAllView();
-  filmsListAllContainerComponent = new FilmsListContainerView();
-  filmsListTopComponent = new FilmsListTopView();
-  filmsListTopContainerComponent = new FilmsListContainerView();
-  filmsListCommentedComponent = new FilmsListCommentedView();
-  filmsListCommentedContainerComponent = new FilmsListContainerView();
+  #boardComponent = new BoardView();
+  #filmsListAllComponent = new FilmsListAllView();
+  #filmsListAllContainerComponent = new FilmsListContainerView();
+  #filmsListTopComponent = new FilmsListTopView();
+  #filmsListTopContainerComponent = new FilmsListContainerView();
+  #filmsListCommentedComponent = new FilmsListCommentedView();
+  #filmsListCommentedContainerComponent = new FilmsListContainerView();
+  #sitePopupElement = document.querySelector('.film-details__inner');
 
+  #filmsContainer = null;
+  #filmsModel = null;
+  #cardFilms = [];
 
   init = (filmsContainer, filmsModel) => {
-    this.filmsContainer = filmsContainer;
-    this.filmsModel = filmsModel;
-    this.cardFilms = [...this.filmsModel.getFilms()];
+    this.#filmsContainer = filmsContainer;
+    this.#filmsModel = filmsModel;
+    this.#cardFilms = [...this.#filmsModel.films];
 
-    render(this.boardComponent, this.filmsContainer);
+    render(this.#boardComponent, this.#filmsContainer);
 
-    render(this.filmsListAllComponent, this.boardComponent.getElement());
-    render(this.filmsListAllContainerComponent, this.filmsListAllComponent.getElement());
-    for (let i = 0; i < this.cardFilms.length; i++) {
-      render(new FilmCardView(this.cardFilms[i]), this.filmsListAllContainerComponent.getElement());
-    }
-    render(new ShowMoreView(), this.filmsListAllComponent.getElement());
+    render(this.#filmsListAllComponent, this.#boardComponent.element);
+    render(this.#filmsListAllContainerComponent, this.#filmsListAllComponent.element);
 
-    render(this.filmsListTopComponent, this.boardComponent.getElement());
-    render(this.filmsListTopContainerComponent, this.filmsListTopComponent.getElement());
-    for (let i = 0; i < 2; i++) {
-      render(new FilmCardView(this.cardFilms[i]), this.filmsListTopContainerComponent.getElement());
+    for (let i = 0; i < this.#cardFilms.length; i++) {
+      this.#renderCard(this.#cardFilms[i], this.#filmsListAllContainerComponent.element, i);
     }
 
-    render(this.filmsListCommentedComponent, this.boardComponent.getElement());
-    render(this.filmsListCommentedContainerComponent, this.filmsListCommentedComponent.getElement());
+    render(new ShowMoreView(), this.#filmsListAllComponent.element);
+
+    render(this.#filmsListTopComponent, this.#boardComponent.element);
+    render(this.#filmsListTopContainerComponent, this.#filmsListTopComponent.element);
     for (let i = 0; i < 2; i++) {
-      render(new FilmCardView(this.cardFilms[i]), this.filmsListCommentedContainerComponent.getElement());
+      this.#renderCard(this.#cardFilms[i], this.#filmsListTopContainerComponent.element, i);
+    }
+
+    render(this.#filmsListCommentedComponent, this.#boardComponent.element);
+    render(this.#filmsListCommentedContainerComponent, this.#filmsListCommentedComponent.element);
+    for (let i = 0; i < 2; i++) {
+      this.#renderCard(this.#cardFilms[i], this.#filmsListCommentedContainerComponent.element, i);
     }
   };
+
+  #renderCard = (card, container, number) => {
+    const cardComponent = new FilmCardView(card);
+
+    cardComponent.element.querySelector('.film-card__poster').addEventListener('click', () => {
+      popupPresenter.init(this.#sitePopupElement, this.#filmsModel, number);
+    });
+    /*
+    this.#sitePopupElement.querySelector('.film-details__close-btn').addEventListener('click', () => {
+      //this.#sitePopupElement.firstChild.remove();
+      console.log('Клик на крестик');
+    });*/
+
+    const onEscKeyDown = (evt) => {
+      if (evt.key === 'Escape' || evt.key === 'Esc') {
+        evt.preventDefault();
+        this.#sitePopupElement.firstChild.remove();
+        document.removeEventListener('keydown', onEscKeyDown);
+      }
+    };
+
+    document.addEventListener('keydown', onEscKeyDown);
+
+    //this.#sitePopupElement.firstChild
+    /*popupTopView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+      //popupPresenter.init(this.#sitePopupElement, this.#filmsModel, number);
+      console.log('close');
+    });*/
+
+    render(cardComponent, container);
+  };
+
 }

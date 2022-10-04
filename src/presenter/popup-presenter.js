@@ -7,30 +7,49 @@ import NewCommentView from '../view/new-comment-view.js';
 import {render} from '../render.js';
 
 export default class PopupPresenter {
-  popupBottomComponent = new PopupBottomView();
-  commentListContainerComponent = new CommentListContainerView();
+  #popupBottomComponent = new PopupBottomView();
+  #commentListContainerComponent = new CommentListContainerView();
+  #popupContainer = null;
+  #filmsModel = null;
+  #cardFilms = [];
+  #cardComment = [];
 
-  init = (popupContainer, filmsModel) => {
-    this.popupContainer = popupContainer;
-    this.filmsModel = filmsModel;
-    this.cardFilms = [...this.filmsModel.getFilms()];
-    this.cardComment = [...this.filmsModel.getCommentsText()];
+  init = (popupContainer, filmsModel, number) => {
+    this.#popupContainer = popupContainer;
+    this.#filmsModel = filmsModel;
+    this.#cardFilms = [...this.#filmsModel.films];
+    this.#cardComment = [...this.#filmsModel.commentText];
 
-    render(new PopupTopView(this.cardFilms[0]), this.popupContainer);
+    render(new PopupTopView(this.#cardFilms[number]), this.#popupContainer);
 
-    render(this.popupBottomComponent, this.popupContainer);
+    render(this.#popupBottomComponent, this.#popupContainer);
 
-    render(new CommentsCountView(this.cardFilms[0]), this.popupBottomComponent.getElement());
+    render(new CommentsCountView(this.#cardFilms[number]), this.#popupBottomComponent.element);
 
-    render(this.commentListContainerComponent, this.popupBottomComponent.getElement());
+    render(this.#commentListContainerComponent, this.#popupBottomComponent.element);
 
-    for (const card of this.cardComment) {
-      if (this.cardFilms[0].comments.includes(card.id)) {
-        render(new CommentCardView(card), this.commentListContainerComponent.getElement());
+    for (const card of this.#cardComment) {
+      if (this.#cardFilms[number].comments.includes(card.id)) {
+        render(new CommentCardView(card), this.#commentListContainerComponent.element);
       }
     }
 
-    render(new NewCommentView(), this.commentListContainerComponent.getElement());
+    render(new NewCommentView(), this.#commentListContainerComponent.element);
+
+    /*cardComponent.element.querySelector('.film-card__title').addEventListener('click', () => {
+      popupPresenter.init(this.#sitePopupElement, this.#filmsModel, number);
+    });
+    //const popupTopView = new PopupTopView(this.#cardComment[0]);
+
+    popupTopView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+      //popupPresenter.init(this.#sitePopupElement, this.#filmsModel, number);
+      console.log('close');
+    });*/
 
   };
+  /*
+  popupTopView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+    console.log('close');
+  });*/
+
 }
