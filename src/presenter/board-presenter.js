@@ -64,7 +64,7 @@ export default class BoardPresenter {
     /*
     this.#sitePopupElement.querySelector('.film-details__close-btn').addEventListener('click', () => {
       //this.#sitePopupElement.firstChild.remove();
-      console.log('Клик на крестик');
+      console.log('Клик на крестик!');
     });*/
 
     const onEscKeyDown = (evt) => {
