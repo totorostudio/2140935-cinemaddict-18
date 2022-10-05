@@ -7,7 +7,7 @@ import FilmCardView from '../view/film-card-view.js';
 import ShowMoreView from '../view/show-more-view.js';
 import {render} from '../render.js';
 import PopupPresenter from '../presenter/popup-presenter.js';
-import PopupTopView from '../view/popup-top-view.js';
+//import PopupTopView from '../view/popup-top-view.js';
 
 const popupPresenter = new PopupPresenter();
 
@@ -80,7 +80,7 @@ export default class BoardPresenter {
     /*popupTopView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
       //popupPresenter.init(this.#sitePopupElement, this.#filmsModel, number);
       console.log('close');
-    });*/
+    });  */
 
     render(cardComponent, container);
   };
