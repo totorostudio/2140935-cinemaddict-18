@@ -1,6 +1,8 @@
 import {createElement} from '../render.js';
 import {formatRuntime, formatReleaseDate} from '../utils.js';
 
+const SHORT_DESC_LENGHT = 140;
+
 const createFilmCardTemplate = (film) => {
   const {filmInfo, comments, userDetails} = film;
 
@@ -26,7 +28,7 @@ const createFilmCardTemplate = (film) => {
         <span class="film-card__genre">${filmInfo.genre[0]}</span>
       </p>
       <img src="${filmInfo.poster}" alt="" class="film-card__poster">
-      <p class="film-card__description">${filmInfo.description.length <= 140 ? filmInfo.description : filmInfo.description.substr(0, 138)}…</p>
+      <p class="film-card__description">${filmInfo.description.length <= SHORT_DESC_LENGHT ? filmInfo.description : filmInfo.description.substr(0, SHORT_DESC_LENGHT - 2)}…</p>
 
       <span class="film-card__comments">${comments.length} ${comments.length === 1 ? 'comment' : 'comments'}</span>
     </a>
@@ -39,23 +41,26 @@ const createFilmCardTemplate = (film) => {
 };
 
 export default class FilmCardView {
+  #element = null;
+  #film = null;
+
   constructor(film) {
-    this.film = film;
+    this.#film = film;
   }
 
-  getTemplate() {
-    return createFilmCardTemplate(this.film);
+  get template() {
+    return createFilmCardTemplate(this.#film);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

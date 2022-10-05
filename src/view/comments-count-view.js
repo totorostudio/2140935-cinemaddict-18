@@ -6,23 +6,26 @@ const createCommentsCountViewTemplate = (film) => {
 };
 
 export default class CommentsCountView {
+  #element = null;
+  #film = null;
+
   constructor(film) {
-    this.film = film;
+    this.#film = film;
   }
 
-  getTemplate() {
-    return createCommentsCountViewTemplate(this.film);
+  get template() {
+    return createCommentsCountViewTemplate(this.#film);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
