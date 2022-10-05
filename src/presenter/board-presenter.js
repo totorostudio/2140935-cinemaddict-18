@@ -7,7 +7,10 @@ import FilmCardView from '../view/film-card-view.js';
 import ShowMoreView from '../view/show-more-view.js';
 import {render} from '../render.js';
 import PopupPresenter from '../presenter/popup-presenter.js';
+<<<<<<< HEAD
 //import PopupTopView from '../view/popup-top-view.js';
+=======
+>>>>>>> master
 
 const popupPresenter = new PopupPresenter();
 
@@ -52,6 +55,13 @@ export default class BoardPresenter {
     for (let i = 0; i < 2; i++) {
       this.#renderCard(this.#cardFilms[i], this.#filmsListCommentedContainerComponent.element, i);
     }
+
+    /*
+    taskEditComponent.element.querySelector('form').addEventListener('click', (evt) => {
+      evt.preventDefault();
+      popupPresenter.init(this.#sitePopupElement, this.#filmsModel, 5);
+    });*/
+
   };
 
   #renderCard = (card, container, number) => {
